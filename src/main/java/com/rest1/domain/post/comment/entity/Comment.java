@@ -9,14 +9,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@AllArgsConstructor // 내가 사용 용도
-@NoArgsConstructor // JPA가 사용 용도
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class Comment extends BaseEntity {
 
     private String content;
-
-    @ManyToOne //Many -> 외래키 부여
+    @ManyToOne
     private Post post;
 
     public void update(String content) {

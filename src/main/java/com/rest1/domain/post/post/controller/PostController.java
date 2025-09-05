@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.Reader;
 import java.util.List;
+
 @Controller
 public class PostController {
 
@@ -112,6 +113,7 @@ public class PostController {
         return "redirect:/posts";
 
     }
+
 
     @GetMapping("/posts/{id}")
     @Transactional(readOnly = true)

@@ -1,6 +1,5 @@
 package com.rest1.domain.post.comment.controller;
 
-
 import com.rest1.domain.post.comment.entity.Comment;
 import com.rest1.domain.post.post.entity.Post;
 import com.rest1.domain.post.post.service.PostService;
@@ -43,6 +42,7 @@ public class CommentController {
             @Size(min = 2, max = 100, message = "댓글 내용은 2글자 이상 100글자 이하로 입력해주세요.")
             String content
     ) {}
+
     @GetMapping("/posts/{postId}/comments/{commentId}/modify")
     public String modify(
             @PathVariable Long postId,

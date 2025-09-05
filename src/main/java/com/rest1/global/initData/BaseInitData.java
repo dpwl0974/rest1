@@ -1,6 +1,5 @@
 package com.rest1.global.initData;
 
-
 import com.rest1.domain.post.post.entity.Post;
 import com.rest1.domain.post.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,9 @@ public class BaseInitData {
     @Bean
     ApplicationRunner initDataRunner() {
         return args -> {
+
             self.work1();
+
         };
 
     }
