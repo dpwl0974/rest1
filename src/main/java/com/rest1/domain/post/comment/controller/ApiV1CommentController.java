@@ -39,7 +39,7 @@ public class ApiV1CommentController {
     // restful 하진 않지만, 편의성 위해 get 사용 -> 행위 2개라 좋은 구조 x
     @GetMapping("/{postId}/comments/{commentId}/delete")
     @Transactional  // 쓰기도 하므로 readOnly 아님
-    public RsData deleteItem(@PathVariable Long postId, @PathVariable Long commentId) {
+    public RsData<Void> deleteItem(@PathVariable Long postId, @PathVariable Long commentId) {
         Post post = postService.findById(postId).get();
         Comment comment = post.findCommentById(commentId).get();
 
@@ -47,10 +47,10 @@ public class ApiV1CommentController {
 
         // json 형태 반환
         // 삭제된 댓글 data 필드 추가
-        RsData<CommentDto> rsData = new RsData<>(
+        // void -> 데이터 없어도 됨
+        RsData<Void> rsData = new RsData<>(
                 "204-1",
-                "%d번 댓글이 삭제되었습니다.".formatted(commentId),
-                new CommentDto(comment)
+                "%d번 댓글이 삭제되었습니다.".formatted(commentId)
         );
         return rsData;
     }

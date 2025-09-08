@@ -16,4 +16,10 @@ public class RsData<T>{  // 조회를 제외한 모든 요청에 대한 응답�
     // Object 대신 제너릭 사용 - 강제성 가능
     private T data;
 
+
+    public RsData(String resultCode, String msg) {
+        this.resultCode = resultCode;
+        this.msg = msg;
+        this.data = null;
+    }
 }
