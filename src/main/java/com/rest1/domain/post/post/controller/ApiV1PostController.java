@@ -19,6 +19,7 @@ public class ApiV1PostController {
 
     private final PostService postService;
 
+    // 글 다건 조회
     @GetMapping // 주소 생략 -> 간결
     @Transactional(readOnly = true)
     public List<PostDto> getItems() {
@@ -27,10 +28,13 @@ public class ApiV1PostController {
                 .toList();
     }
 
+    // 글 단건 조회
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
     public PostDto getItem(@PathVariable Long id) {
         Post post = postService.findById(id).get();
         return new PostDto(post);
     }
+
+
 }
