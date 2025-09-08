@@ -64,7 +64,7 @@ public class ApiV1PostController {
                                           @Valid PostWriteForm form) {
         Post post = postService.write(form.title, form.content);
         return new RsData<>(
-                "201-1",
+                "201-1",  // 개발자끼리 상태 전달 위한 규칙 코드
                 "%d번 게시물이 생성되었습니다.".formatted(post.getId()),
                 new PostDto(post)
         );
