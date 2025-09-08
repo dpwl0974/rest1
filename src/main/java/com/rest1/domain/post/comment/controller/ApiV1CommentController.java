@@ -6,10 +6,7 @@ import com.rest1.domain.post.post.entity.Post;
 import com.rest1.domain.post.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,5 +32,16 @@ public class ApiV1CommentController {
         Post post = postService.findById(postId).get();
         Comment comment = post.findCommentById(commentId).get();
         return new CommentDto(comment);
+    }
+
+    // 댓글 삭제
+    // restful 하진 않지만, 편의성 위해 get 사용 -> 행위 2개라 좋은 구조 x
+    @GetMapping("/{postId}/comments/{commentId}/delete")
+    @Transactional  // 쓰기도 하므로 readOnly 아님
+    public String deleteItem(@PathVariable Long postId, @PathVariable Long commentId) {
+        Post post = postService.findById(postId).get();
+        postService.deleteComment(post, commentId);
+
+        return "%d번 댓글 삭제 완료".formatted(commentId);
     }
 }
