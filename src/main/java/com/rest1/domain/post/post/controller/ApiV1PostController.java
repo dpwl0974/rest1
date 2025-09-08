@@ -23,7 +23,7 @@ public class ApiV1PostController {
     @Transactional(readOnly = true)
     public List<PostDto> getItems() {
         return postService.findAll().stream()
-                .map(post -> new PostDto(post)) // 엔터티 하나씩 꺼내서 dto로 보내기 (구조적으로 좋음)
+                .map(PostDto::new) // 엔터티 하나씩 꺼내서 dto로 보내기 (구조적으로 좋음)
                 .toList();
     }
 
