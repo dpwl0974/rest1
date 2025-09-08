@@ -41,12 +41,16 @@ public class ApiV1CommentController {
     @Transactional  // 쓰기도 하므로 readOnly 아님
     public RsData deleteItem(@PathVariable Long postId, @PathVariable Long commentId) {
         Post post = postService.findById(postId).get();
+        Comment comment = post.findCommentById(commentId).get();
+
         postService.deleteComment(post, commentId);
 
         // json 형태 반환
+        // 삭제된 댓글 data 필드 추가
         return new RsData(
                 "204-1",
-                "%d번 댓글이 삭제되었습니다.".formatted(commentId)
+                "%d번 댓글이 삭제되었습니다.".formatted(commentId),
+                new CommentDto(comment)
         );
     }
 }
