@@ -1,6 +1,7 @@
 package com.rest1.global.rsData;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -21,5 +22,11 @@ public class RsData<T>{  // 조회를 제외한 모든 요청에 대한 응답�
         this.resultCode = resultCode;
         this.msg = msg;
         this.data = null;
+    }
+
+    @JsonIgnore
+    public int getStatusCode() {
+        String statusCode = resultCode.split("-")[0];
+        return Integer.parseInt(statusCode);
     }
 }
