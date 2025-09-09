@@ -86,4 +86,32 @@ public class ApiV1PostController {
             )
         );
     }
+
+    // 글 수정 record
+    record PostModifyReqBody(
+            @NotBlank
+            @Size(min = 2, max = 10)
+            String title,
+
+            @NotBlank
+            @Size(min = 2, max = 100)
+            String content
+    ) {
+    }
+
+    // 글 수정
+    @PutMapping("/{id}")
+    @Transactional
+    public RsData<Void> modifyItem(
+            @PathVariable Long id,
+            @RequestBody @Valid PostModifyReqBody reqBody
+    ) {
+        Post post = postService.findById(id).get();
+        postService.modify(post, reqBody.title, reqBody.content);
+
+        return new RsData(
+                "200-1",
+                "%d번 게시물이 수정되었습니다.".formatted(id)
+        );
+    }
 }
