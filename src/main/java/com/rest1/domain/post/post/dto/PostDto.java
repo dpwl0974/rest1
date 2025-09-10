@@ -10,8 +10,8 @@ public record PostDto (
         Long id,
         LocalDateTime createDate,
         LocalDateTime modifyDate,
-        String subject, // 엔터티 건드릴 필요없이 dto에서 이름 변경
-        String body
+        String title, // 엔터티 건드릴 필요없이 dto에서 이름 변경
+        String content
 ){
     public PostDto(Post post){
         this(
