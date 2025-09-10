@@ -24,7 +24,7 @@ public class ApiV1PostController {
     @GetMapping // 주소 생략 -> 간결
     @Transactional(readOnly = true)
     public List<PostDto> getItems() {
-        return postService.findAll().stream()
+        return postService.findAll().reversed().stream()
                 .map(PostDto::new) // 엔터티 하나씩 꺼내서 dto로 보내기 (구조적으로 좋음)
                 .toList();
     }
