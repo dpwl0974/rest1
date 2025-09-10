@@ -24,7 +24,7 @@ public class ApiV1CommentController {
     @GetMapping("/{postId}/comments")
     public List<CommentDto> getItems(@PathVariable Long postId) {
         Post post = postService.findById(postId).get();
-        return post.getComments().stream()
+        return post.getComments().reversed().stream()
                 .map(CommentDto::new)
                 .toList();
     }
