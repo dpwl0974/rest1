@@ -4,6 +4,8 @@ import com.rest1.domain.post.post.dto.PostDto;
 import com.rest1.domain.post.post.entity.Post;
 import com.rest1.domain.post.post.service.PostService;
 import com.rest1.global.rsData.RsData;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -16,6 +18,7 @@ import java.util.List;
 @RestController // json 형태인 @responsebody 생략 가능
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/posts") // 모든 메소드에 자동 매핑
+@Tag(name = "ApiV1PostController", description = "글 API")
 public class ApiV1PostController {
 
     private final PostService postService;
@@ -23,6 +26,7 @@ public class ApiV1PostController {
     // 글 다건 조회
     @GetMapping // 주소 생략 -> 간결
     @Transactional(readOnly = true)
+    @Operation(summary = "글 다건 조회")
     public List<PostDto> getItems() {
         return postService.findAll().reversed().stream()
                 .map(PostDto::new) // 엔터티 하나씩 꺼내서 dto로 보내기 (구조적으로 좋음)
@@ -32,6 +36,7 @@ public class ApiV1PostController {
     // 글 단건 조회
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
+    @Operation(summary = "글 단건 조회")
     public PostDto getItem(@PathVariable Long id) {
         Post post = postService.findById(id).get();
         return new PostDto(post);
@@ -40,6 +45,7 @@ public class ApiV1PostController {
     // 글 삭제 - 편의상 get => Delete 사용으로 전환 -> restful 해짐
     @DeleteMapping("/{id}")
     @Transactional
+    @Operation(summary = "글 삭제")
     public RsData<Void> deleteItem(@PathVariable Long id) {
         Post post = postService.findById(id).get();
         postService.delete(post);
@@ -70,6 +76,7 @@ public class ApiV1PostController {
     // 글 등록
     @PostMapping
     @Transactional
+    @Operation(summary = "글 작성")
     public RsData<PostWriteResBody> createItem(@RequestBody @Valid PostWriteReqBody reqBody) {
         Post post = postService.write(reqBody.title, reqBody.content);
         long totalCount = postService.count();
@@ -100,6 +107,7 @@ public class ApiV1PostController {
     // 글 수정
     @PutMapping("/{id}")
     @Transactional
+    @Operation(summary = "글 수정")
     public RsData<Void> modifyItem(
             @PathVariable Long id,
             @RequestBody @Valid PostModifyReqBody reqBody

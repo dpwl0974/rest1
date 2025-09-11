@@ -5,6 +5,8 @@ import com.rest1.domain.post.comment.entity.Comment;
 import com.rest1.domain.post.post.entity.Post;
 import com.rest1.domain.post.post.service.PostService;
 import com.rest1.global.rsData.RsData;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -17,11 +19,13 @@ import java.util.List;
 @RestController // json 형태인 @responsebody 생략 가능
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/posts") // 모든 메소드에 자동 매핑
+@Tag(name = "ApiV1CommentController", description = "댓글 API")
 public class ApiV1CommentController {
     private final PostService postService;
 
     // 댓글 다건 조회
     @GetMapping(value = "/{postId}/comments")
+    @Operation(summary = "다건 조회")
     public List<CommentDto> getItems(@PathVariable Long postId) {
         Post post = postService.findById(postId).get();
         return post.getComments().reversed().stream()
@@ -31,6 +35,7 @@ public class ApiV1CommentController {
 
     // 댓글 단건 조회
     @GetMapping(value = "/{postId}/comments/{commentId}")
+    @Operation(summary = "단건 조회")
     @Transactional(readOnly = true)
     public CommentDto getItem(@PathVariable Long postId, @PathVariable Long commentId) {
         Post post = postService.findById(postId).get();
@@ -44,6 +49,7 @@ public class ApiV1CommentController {
     // restful 하진 않지만, 편의성 위해 get 사용 -> 행위 2개라 좋은 구조 x
     // deletemapping으로 변환
     @DeleteMapping("/{postId}/comments/{commentId}")
+    @Operation(summary = "댓글 삭제")
     @Transactional  // 쓰기도 하므로 readOnly 아님
     public RsData<Void> deleteItem(@PathVariable Long postId, @PathVariable Long commentId) {
         Post post = postService.findById(postId).get();
@@ -74,6 +80,7 @@ public class ApiV1CommentController {
     // 댓글 생성
     @PostMapping("/{postId}/comments")
     @Transactional
+    @Operation(summary = "댓글 작성")
     public RsData<CommentWriteResBody> createItem(
             @PathVariable Long postId,
             @RequestBody @Valid CommentWriteReqBody reqBody
@@ -103,6 +110,7 @@ public class ApiV1CommentController {
 
     @PutMapping("/{postId}/comments/{commentId}")
     @Transactional
+    @Operation(summary = "댓글 수정")
     public RsData<Void> modifyItem(
             @PathVariable Long postId,
             @PathVariable Long commentId,
