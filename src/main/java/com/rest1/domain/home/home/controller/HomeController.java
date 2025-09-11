@@ -1,6 +1,7 @@
 package com.rest1.domain.home.home.controller;
 
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,7 +11,7 @@ import java.net.UnknownHostException;
 @RestController
 public class HomeController {
 
-    @GetMapping
+    @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
     public String home() throws UnknownHostException {
 
         InetAddress localhost = InetAddress.getLocalHost();

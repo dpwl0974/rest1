@@ -21,7 +21,7 @@ public class ApiV1CommentController {
     private final PostService postService;
 
     // 댓글 다건 조회
-    @GetMapping("/{postId}/comments")
+    @GetMapping(value = "/{postId}/comments")
     public List<CommentDto> getItems(@PathVariable Long postId) {
         Post post = postService.findById(postId).get();
         return post.getComments().reversed().stream()
@@ -30,7 +30,7 @@ public class ApiV1CommentController {
     }
 
     // 댓글 단건 조회
-    @GetMapping("/{postId}/comments/{commentId}")
+    @GetMapping(value = "/{postId}/comments/{commentId}")
     @Transactional(readOnly = true)
     public CommentDto getItem(@PathVariable Long postId, @PathVariable Long commentId) {
         Post post = postService.findById(postId).get();
